@@ -1,5 +1,15 @@
-const Migrations = artifacts.require("Migrations");
-
-module.exports = async(deployer, _network, accounts)  => {
-    deployer.deploy(Migrations, { last_completed_migration: 0, owner: accounts[0] });
+const Multisig = artifacts.require("Multisig");
+const accounts = require("../scripts/sandbox/accounts");
+module.exports = async (deployer, _network, _accounts) => {
+  deployer.deploy(Multisig, {
+    current_proposal: null,
+    threshold: 2,
+    approved_by: [],
+    owners: [accounts.alice.pkh, accounts.bob.pkh, accounts.eve.pkh],
+  });
+  //   deployer.deploy(Multisig, {
+  //     stored_counter: 0,
+  //     threshold: 2,
+  //     keys: [accounts.alice.pk, accounts.bob.pk, accounts.eve.pk],
+  //   });
 };
