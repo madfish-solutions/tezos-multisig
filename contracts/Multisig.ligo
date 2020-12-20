@@ -1,12 +1,12 @@
 type operator_info is record [
-  maanger     : address;
   allowed     : bool;
+  manager     : address;
 ]
 
 type proposal_info is record [
   actions     : unit -> list(operation);
-  expired     : nat;
   approve     : bool;
+  expired     : nat;
 ]
 
 type proposal is record [
@@ -120,8 +120,8 @@ function control (const action : operator_info; const s : storage) : storage is
     else failwith("Multisig/not-permitted");
 
     (* Set manager permissions *)
-    s.managers := if action.allowed then Set.add(action.maanger, s.managers)
-    else Set.remove(action.maanger, s.managers);
+    s.managers := if action.allowed then Set.add(action.manager, s.managers)
+    else Set.remove(action.manager, s.managers);
   } with s
 
 (* Sets the number of required confirmations *)

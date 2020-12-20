@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "downlevelIteration": true,
+    "outDir": "./test/",
+    "lib": ["es2015"]
+  }
+}

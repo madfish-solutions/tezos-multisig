@@ -5,7 +5,7 @@ import { bakeBlocks } from "./proxies/utils";
 
 const CMultisig = artifacts.require("Multisig");
 contract("Default()", function () {
-  beforeEach(async () => {
+  beforeEach(async function () {
     this.multisig = await Multisig.init((await CMultisig.deployed()).address);
   });
 
