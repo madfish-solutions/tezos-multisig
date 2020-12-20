@@ -23,3 +23,15 @@ Verification Steps: Verify the balance of the contract grows.
 Scenario 1: Test transfer from implicit account
 
 Scenario 2: Test transfer from another contract
+
+### Test Item: Propose Entrypoint
+
+Scope: Test propose from users with different permissions.
+Action: Invoke the Propose entrypoint.
+Test Notes and Preconditions: Make sure the only proposals from admins will be accepted.
+Verification Steps: Verify the operation only from authorized users are permitted.
+
+Scenario 1: Test make proposal:
+
+- from one of the admins
+- from one without admin permissions
