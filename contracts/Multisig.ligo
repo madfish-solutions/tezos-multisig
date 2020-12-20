@@ -72,12 +72,27 @@ type action is
 //     end;
 //   } with (operations, s)
 
+function control (const action : operator_info; const s : storage) : storage is
+  block {
+    if Tezos.sender = Tezos.self_address then skip
+    else failwith("Multisig/not-permitted");
+    s.managers := if action.allowed then Set.add(action.maanger, s.managers)
+    else Set.remove(action.maanger, s.managers);
+  } with s
+
+function require (const new_required : nat; const s : storage) : storage is
+  block {
+    if Tezos.sender = Tezos.self_address then skip
+    else failwith("Multisig/not-permitted");
+    s.required := new_required;
+  } with s
+
 function main (const action : action; const s : storage) : return is
   case action of
-    | Control(params) -> ((nil : list(operation)), s)
+    | Control(params) -> ((nil : list(operation)), control(params, s))
     | Propose(params) -> ((nil : list(operation)), s)
     | Approve(params) -> ((nil : list(operation)), s)
     | Execute(params) -> ((nil : list(operation)), s)
     | Default(params) -> ((nil : list(operation)), s)
-    | Require(params) -> ((nil : list(operation)), s)
+    | Require(params) -> ((nil : list(operation)), require(params, s))
   end
