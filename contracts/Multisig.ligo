@@ -73,6 +73,9 @@ function approve (const proposal_id : nat ; const s : storage) : storage is
       (* Delete proposal if it is outdated *)
       if proposal.expired < Tezos.now then remove proposal_id from map s.pendings
       else block {
+        (* Check if approved *)
+        if Set.mem(Tezos.sender, proposal.approve) then failwith("Multisig/approved")
+        else skip;
         (* Approve proposal otherwise *)
         proposal.approve := Set.add(Tezos.sender, proposal.approve);
         s.pendings[proposal_id] := proposal;

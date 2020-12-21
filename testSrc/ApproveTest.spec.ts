@@ -77,4 +77,74 @@ contract.only("Approve()", function () {
     );
     await multisig.updateProvider("alice");
   });
+
+  it("shouldn't approve twice", async function () {
+    await multisig.propose("transfer", false, standardDelay);
+    const id = multisig.storage.id_count.toNumber() - 1;
+    await multisig.approve(id);
+    await rejects(
+      multisig.approve(id),
+      (err) => {
+        strictEqual(err.message, "Multisig/approved", "Error message mismatch");
+        return true;
+      },
+      "Should fail"
+    );
+  });
+
+  it("shouldn't approve if approved during suggestion stage", async function () {
+    await multisig.propose("transfer", true, standardDelay);
+    const id = multisig.storage.id_count.toNumber() - 1;
+    await rejects(
+      multisig.approve(id),
+      (err) => {
+        strictEqual(err.message, "Multisig/approved", "Error message mismatch");
+        return true;
+      },
+      "Should fail"
+    );
+  });
+
+  it("should approve if not approved during suggestion", async function () {
+    await multisig.propose("transfer", false, standardDelay);
+    const id = multisig.storage.id_count.toNumber() - 1;
+    await multisig.approve(id);
+    await multisig.updateStorage({ pendings: [new BigNumber(id)] });
+    const finalStorage = multisig.storage;
+    strictEqual(
+      finalStorage.pendings[id].approve.length,
+      1,
+      "The number of confiramtions should 1"
+    );
+    await multisig.updateProvider("alice");
+  });
+
+  it("should approve before deadline", async function () {
+    await multisig.propose("transfer", false, standardDelay);
+    const id = multisig.storage.id_count.toNumber() - 1;
+    await multisig.approve(id);
+    await multisig.updateStorage({ pendings: [new BigNumber(id)] });
+    const finalStorage = multisig.storage;
+    strictEqual(
+      finalStorage.pendings[id].approve.length,
+      1,
+      "The number of confiramtions should 1"
+    );
+    await multisig.updateProvider("alice");
+  });
+
+  it("shouldn't approve after deadline", async function () {
+    const minimalDeadline = 3600;
+    await multisig.propose("transfer", false, minimalDeadline);
+    const id = multisig.storage.id_count.toNumber() - 1;
+    await multisig.approve(id);
+    await multisig.updateStorage({ pendings: [new BigNumber(id)] });
+    const finalStorage = multisig.storage;
+    strictEqual(
+      finalStorage.pendings[id].approve.length,
+      1,
+      "The number of confiramtions should 1"
+    );
+    await multisig.updateProvider("alice");
+  });
 });
