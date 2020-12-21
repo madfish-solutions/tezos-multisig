@@ -88,7 +88,7 @@ export class Multisig {
     return operation;
   }
 
-  async approve(id: string): Promise<TransactionOperation> {
+  async approve(id: number): Promise<TransactionOperation> {
     const operation = await this.contract.methods.approve(id).send();
     await operation.confirmation();
     await this.updateStorage();

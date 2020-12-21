@@ -6,7 +6,7 @@ import BigNumber from "bignumber.js";
 
 const CMultisig = artifacts.require("Multisig");
 
-contract.only("Propose()", function () {
+contract("Propose()", function () {
   let multisig: Multisig;
 
   before(async function () {
@@ -165,7 +165,7 @@ contract.only("Propose()", function () {
     strictEqual(
       finalStorage.pendings[id].approve.length,
       1,
-      "The number of confiramtions should 0"
+      "The number of confiramtions should 1"
     );
   });
 });

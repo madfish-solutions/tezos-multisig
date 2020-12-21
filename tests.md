@@ -84,3 +84,15 @@ Scenario 1: Test make proposal:
 
 [x] with approve=true
 [x] with approve=false
+
+### Test Item: Approve Entrypoint
+
+Scope: Test approve from users with different permissions.
+Action: Invoke the Approve entrypoint.
+Test Notes and Preconditions: Make sure the proposals can be approved by admins only.
+Verification Steps: Verify the approvals only from authorized users are permitted.
+
+Scenario 1: Test make proposal:
+
+[x] from one of the admins
+[x] from one without admin permissions
