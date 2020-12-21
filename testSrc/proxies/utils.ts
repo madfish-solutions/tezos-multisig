@@ -3,6 +3,7 @@ import { InMemorySigner } from "@taquito/signer";
 import { TransactionOperation } from "@taquito/taquito/dist/types/operations/transaction-operation";
 import accounts from "../accounts/accounts";
 export const tezPrecision = 1e6;
+export const standardDelay = 200000;
 
 export function getLigo(isDockerizedLigo: boolean): string {
   let path = "ligo";

@@ -23,7 +23,11 @@ Verification Steps: Verify the balance of the contract grows.
 
 Scenario 1: Test transfer from implicit account
 
+[x] send from Alice
+
 Scenario 2: Test transfer from another contract
+
+[x] send from Carol
 
 ### Test Item: Propose Entrypoint
 
@@ -34,8 +38,8 @@ Verification Steps: Verify the operation only from authorized users are permitte
 
 Scenario 1: Test make proposal:
 
-- from one of the admins
-- from one without admin permissions
+[x] from one of the admins
+[x] from one without admin permissions
 
 Scope: Test different amount of proposals.
 Action: Invoke the Propose entrypoint.
@@ -44,18 +48,19 @@ Verification Steps: Verify the proposal is added even the others aren't executed
 
 Scenario 1: Test make proposal:
 
-- 1 proposal
-- 4 proposals
+[x] 1 proposal
+[x] 4 proposals
 
 Scope: Test different kinds of proposals.
 Action: Invoke the Propose entrypoint.
 Test Notes and Preconditions: Make sure the transfer, invoke smat contract and batch of operations can be proposed.
 Verification Steps: Verify the proposal is added regardless of the content.
 
-Scenario 1: Test make proposal:
+Scenario 1: Test make proposal of:
 
-- from one of the admins
-- from one without admin permissions
+- transfer
+- invoke contract
+- batch of operations
 
 Scope: Test different expiration period of proposals.
 Action: Invoke the Propose entrypoint.
