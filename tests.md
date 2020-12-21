@@ -58,9 +58,9 @@ Verification Steps: Verify the proposal is added regardless of the content.
 
 Scenario 1: Test make proposal of:
 
-- transfer
-- invoke contract
-- batch of operations
+[x] transfer
+[x] invoke contract
+[x] batch of operations
 
 Scope: Test different expiration period of proposals.
 Action: Invoke the Propose entrypoint.
@@ -69,11 +69,11 @@ Verification Steps: Verify the proposal is added only if the expiration timeout 
 
 Scenario 1: Test make proposal with the expiration period of:
 
-- 20000000 seconds
-- 1000 seconds
-- 3600 seconds
-- 15552000 seconds
-- 200000 seconds
+[x] 20000000 seconds
+[x] 1000 seconds
+[x] 3600 seconds
+[x] 15552000 seconds
+[x] 200000 seconds
 
 Scope: Test confirm option of the proposal suggestion.
 Action: Invoke the Propose entrypoint.
@@ -82,5 +82,5 @@ Verification Steps: Verify the proposal is confirmed by sender if the option is 
 
 Scenario 1: Test make proposal:
 
-- with approve=true
-- with approve=false
+[x] with approve=true
+[x] with approve=false

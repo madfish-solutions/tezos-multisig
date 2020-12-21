@@ -98,4 +98,74 @@ contract.only("Propose()", function () {
       "The number of requests should increase"
     );
   });
+
+  it("shouldn't accept proposal with too long delay", async function () {
+    const longDelay = 20000000;
+    await rejects(
+      multisig.propose("transfer", false, longDelay),
+      (err) => {
+        strictEqual(
+          err.message,
+          "Multisig/wrong-duration",
+          "Error message mismatch"
+        );
+        return true;
+      },
+      "Should fail"
+    );
+  });
+
+  it("shouldn't accept proposal with too short delay", async function () {
+    const shortDelay = 1000;
+    await rejects(
+      multisig.propose("transfer", false, shortDelay),
+      (err) => {
+        strictEqual(
+          err.message,
+          "Multisig/wrong-duration",
+          "Error message mismatch"
+        );
+        return true;
+      },
+      "Should fail"
+    );
+  });
+
+  it("should accept proposal with delay in range", async function () {
+    await multisig.propose("invoke", false, standardDelay);
+  });
+
+  it("should accept proposal with minimal delay ", async function () {
+    const minimalDelay = 3600;
+    await multisig.propose("invoke", false, minimalDelay);
+  });
+
+  it("should accept proposal with maximal delay ", async function () {
+    const maximalDelay = 15552000;
+    await multisig.propose("invoke", false, maximalDelay);
+  });
+
+  it("shouldn't approve proposal during suggestion if flag isn't set", async function () {
+    await multisig.propose("transfer", false, standardDelay);
+    const id = multisig.storage.id_count.toNumber() - 1;
+    await multisig.updateStorage({ pendings: [new BigNumber(id)] });
+    const finalStorage = multisig.storage;
+    strictEqual(
+      finalStorage.pendings[id].approve.length,
+      0,
+      "The number of confiramtions should 0"
+    );
+  });
+
+  it("should approve proposal during suggestion if flag is set", async function () {
+    await multisig.propose("transfer", true, standardDelay);
+    const id = multisig.storage.id_count.toNumber() - 1;
+    await multisig.updateStorage({ pendings: [new BigNumber(id)] });
+    const finalStorage = multisig.storage;
+    strictEqual(
+      finalStorage.pendings[id].approve.length,
+      1,
+      "The number of confiramtions should 0"
+    );
+  });
 });

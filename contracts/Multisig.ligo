@@ -44,7 +44,7 @@ function propose (const action : proposal_info ; const s : storage) : storage is
     else failwith("Multisig/not-permitted");
 
     (* Ensure duration is in the safe range *)
-    if action.expired < max_duration and action.expired > min_duration then skip
+    if action.expired <= max_duration and action.expired >= min_duration then skip
     else failwith("Multisig/wrong-duration");
 
     (* Add to proposals map *)
