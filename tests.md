@@ -92,7 +92,27 @@ Action: Invoke the Approve entrypoint.
 Test Notes and Preconditions: Make sure the proposals can be approved by admins only.
 Verification Steps: Verify the approvals only from authorized users are permitted.
 
-Scenario 1: Test make proposal:
+Scenario 1: Test approve:
 
 [x] from one of the admins
 [x] from one without admin permissions
+
+Scope: Test approve in delay range.
+Action: Invoke the Approve entrypoint.
+Test Notes and Preconditions: Make sure the expired proposals cann't be approved.
+Verification Steps: Verify the expired transaction is approved if is valid or removed if it is approved after expiration.
+
+Scenario 1: Test approve:
+
+[] before deadline
+[] after deadline
+
+Scope: Test approve of non-existent proposal.
+Action: Invoke the Approve entrypoint.
+Test Notes and Preconditions: Make sure the non-existed proposals cann't be approved.
+Verification Steps: Verify the approve of non-existed fails.
+
+Scenario 1: Test approve:
+
+[] existed proposal
+[] non-existed proposal

@@ -44,4 +44,37 @@ contract.only("Approve()", function () {
     );
     await multisig.updateProvider("alice");
   });
+
+  it("should approve existed proposal", async function () {
+    await multisig.propose("transfer", true, standardDelay);
+    const id = multisig.storage.id_count.toNumber() - 1;
+    await multisig.updateProvider("bob");
+    await multisig.approve(id);
+    await multisig.updateStorage({ pendings: [new BigNumber(id)] });
+    const finalStorage = multisig.storage;
+    strictEqual(
+      finalStorage.pendings[id].approve.length,
+      2,
+      "The number of confiramtions should 1"
+    );
+    await multisig.updateProvider("alice");
+  });
+
+  it("shouldn't approve non-existed proposal", async function () {
+    const id = multisig.storage.id_count.toNumber();
+    await multisig.updateProvider("bob");
+    await rejects(
+      multisig.approve(id),
+      (err) => {
+        strictEqual(
+          err.message,
+          "Multisig/no-proposal",
+          "Error message mismatch"
+        );
+        return true;
+      },
+      "Should fail"
+    );
+    await multisig.updateProvider("alice");
+  });
 });
