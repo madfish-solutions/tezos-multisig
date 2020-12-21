@@ -10,6 +10,7 @@
 8. Proposal can be executed after enough confirmations only
 9. Proccess both transactions to contracts and transfers
 10. Ensure tokens can be delegated.
+11. Proposal can be confirmed or not during the suggestion of the proposal.
 
 ## Test cases
 
@@ -35,3 +36,46 @@ Scenario 1: Test make proposal:
 
 - from one of the admins
 - from one without admin permissions
+
+Scope: Test different amount of proposals.
+Action: Invoke the Propose entrypoint.
+Test Notes and Preconditions: Make sure the any amount of proposals can be kept.
+Verification Steps: Verify the proposal is added even the others aren't executed.
+
+Scenario 1: Test make proposal:
+
+- 1 proposal
+- 4 proposals
+
+Scope: Test different kinds of proposals.
+Action: Invoke the Propose entrypoint.
+Test Notes and Preconditions: Make sure the transfer, invoke smat contract and batch of operations can be proposed.
+Verification Steps: Verify the proposal is added regardless of the content.
+
+Scenario 1: Test make proposal:
+
+- from one of the admins
+- from one without admin permissions
+
+Scope: Test different expiration period of proposals.
+Action: Invoke the Propose entrypoint.
+Test Notes and Preconditions: Make sure the expiration period is in the bound.
+Verification Steps: Verify the proposal is added only if the expiration timeout is correct.
+
+Scenario 1: Test make proposal with the expiration period of:
+
+- 20000000 seconds
+- 1000 seconds
+- 3600 seconds
+- 15552000 seconds
+- 200000 seconds
+
+Scope: Test confirm option of the proposal suggestion.
+Action: Invoke the Propose entrypoint.
+Test Notes and Preconditions: Make sure the confirmation is done only if the user set the option.
+Verification Steps: Verify the proposal is confirmed by sender if the option is set.
+
+Scenario 1: Test make proposal:
+
+- with approve=true
+- with approve=false
