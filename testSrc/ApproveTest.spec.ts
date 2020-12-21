@@ -6,7 +6,7 @@ import BigNumber from "bignumber.js";
 
 const CMultisig = artifacts.require("Multisig");
 
-contract.only("Approve()", function () {
+contract("Approve()", function () {
   let multisig: Multisig;
 
   before(async function () {

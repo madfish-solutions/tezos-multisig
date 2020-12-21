@@ -104,7 +104,7 @@ Verification Steps: Verify the expired transaction is approved if is valid or re
 
 Scenario 1: Test approve:
 
-[] before deadline
+[x] before deadline
 [] after deadline
 
 Scope: Test approve of non-existent proposal.
@@ -114,5 +114,80 @@ Verification Steps: Verify the approve of non-existed fails.
 
 Scenario 1: Test approve:
 
-[] existed proposal
-[] non-existed proposal
+[x] existed proposal
+[x] non-existed proposal
+
+Scope: Test approve twice.
+Action: Invoke the Approve entrypoint.
+Test Notes and Preconditions: Make sure the admin can't submit approval twice.
+Verification Steps: Verify the second approve fails.
+
+Scenario 1: Test approve:
+
+[x] approve twice
+[x] approve after submission without approve
+[x] approve after submission with approve
+
+### Test Item: Execute Entrypoint
+
+Scope: Test execute from users with different permissions.
+Action: Invoke the Execute entrypoint.
+Test Notes and Preconditions: Make sure the proposals can be executed by admins only.
+Verification Steps: Verify the approvals only from authorized users are permitted.
+
+Scenario 1: Test execute:
+
+[x] from one of the admins
+[x] from one without admin permissions
+
+Scope: Test execute with different confirmations.
+Action: Invoke the Execute entrypoint.
+Test Notes and Preconditions: Make sure the proposals can be executed by admins only.
+Verification Steps: Verify the approvals only from authorized users are permitted.
+
+Scenario 1: Test execute:
+
+[x] with no confiramation
+[x] with not enough confirmations
+[x] with enough confirmations
+[] with more confirmations
+
+Scope: Test different kinds of proposals.
+Action: Invoke the Execute entrypoint.
+Test Notes and Preconditions: Make sure the transfer, invoke smat contract and batch of operations can be executed.
+Verification Steps: Verify the proposal is executed regardless of the content.
+
+Scenario 1: Test make proposal of:
+
+[] transfer
+[] invoke contract
+[] batch of operations
+
+Scope: Test execute with different expiration period of proposals.
+Action: Invoke the Execute entrypoint.
+Test Notes and Preconditions: Make sure the expiration period is in the bound during the execution stage.
+Verification Steps: Verify the proposal is executed only if the expiration timeout is correct.
+
+Scenario 1: Test make proposal with the expiration period of:
+
+[] before deadline
+[] after deadline
+
+Scope: Test execute of non-existent proposal.
+Action: Invoke the Execute entrypoint.
+Test Notes and Preconditions: Make sure the non-existed proposals cann't be executed.
+Verification Steps: Verify the execute of non-existed proposal fails.
+
+Scenario 1: Test execute:
+
+[x] existed proposal
+[x] non-existed proposal
+
+Scope: Test execute twice.
+Action: Invoke the Execute entrypoint.
+Test Notes and Preconditions: Make sure the admin can't execute proposal twice.
+Verification Steps: Verify the second execute request fails.
+
+Scenario 1: Test execute:
+
+[x] twice
