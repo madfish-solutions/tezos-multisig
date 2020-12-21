@@ -1,9 +1,10 @@
 import { ContractAbstraction, ContractProvider } from "@taquito/taquito";
 import { TransactionOperation } from "@taquito/taquito/dist/types/operations/transaction-operation";
 import { MultisigStorage } from "./types";
-import { prepareProviderOptions } from "./utils";
+import { getLigo, prepareProviderOptions } from "./utils";
 import { tezPrecision } from "./utils";
 import BigNumber from "bignumber.js";
+import { execSync } from "child_process";
 
 export class Multisig {
   public contract: ContractAbstraction<ContractProvider>;
@@ -30,9 +31,9 @@ export class Multisig {
     const storage: any = await this.contract.storage();
     this.storage = {
       pendings: {},
-      managers: storage.last_updated,
-      id_count: storage.earnings_end,
-      required: storage.total_staked,
+      managers: storage.managers,
+      id_count: storage.id_count,
+      required: storage.required,
     };
     for (let key in maps) {
       this.storage[key] = await maps[key].reduce(async (prev, current) => {
@@ -63,13 +64,25 @@ export class Multisig {
   }
 
   async propose(
-    proposal: string,
+    name: string,
     approve: boolean,
     expired: number
   ): Promise<TransactionOperation> {
-    const operation = await this.contract.methods
-      .propose(proposal, approve, expired)
-      .send();
+    let ligo = getLigo(true);
+    const stdout = execSync(
+      `${ligo} compile-parameter --michelson-format=json $PWD/testSrc/partial/${name}.ligo main 'Propose(record actions = call; approve = ${
+        approve ? "True" : "False"
+      }; expired = ${expired}n; end)'`,
+      { maxBuffer: 1024 * 500 }
+    );
+    const operation = await tezos.contract.transfer({
+      to: this.contract.address,
+      amount: 0,
+      parameter: {
+        entrypoint: "propose",
+        value: JSON.parse(stdout.toString()).args[0].args[0],
+      },
+    });
     await operation.confirmation();
     await this.updateStorage();
     return operation;

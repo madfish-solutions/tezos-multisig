@@ -9,16 +9,16 @@ const CTTokensResender = artifacts.require("TTokensResender");
 contract("Default()", function () {
   let multisig: Multisig;
 
-  beforeEach(async function () {
-    this.multisig = await Multisig.init((await CMultisig.deployed()).address);
+  before(async function () {
+    multisig = await Multisig.init((await CMultisig.deployed()).address);
   });
 
   it("should receive tokens from implicit account", async function () {
     const amount = 1000000;
     const aliceAddress = await tezos.signer.publicKeyHash();
-    const multisigAddress = this.multisig.contract.address;
+    const multisigAddress = multisig.contract.address;
     const initialBalance = await tezos.tz.getBalance(multisigAddress);
-    await this.multisig.default(amount);
+    await multisig.default(amount);
     const filalBalance = await tezos.tz.getBalance(multisigAddress);
     strictEqual(
       initialBalance.toNumber() + amount,
@@ -31,7 +31,7 @@ contract("Default()", function () {
     const amount = 1000000;
     const tokensResender = await CTTokensResender.new(undefined);
     const aliceAddress = await tezos.signer.publicKeyHash();
-    const multisigAddress = this.multisig.contract.address;
+    const multisigAddress = multisig.contract.address;
     const initialBalance = await tezos.tz.getBalance(multisigAddress);
     await tokensResender.main(multisigAddress, {
       amount: amount / tezPrecision,

@@ -2,7 +2,7 @@ import BigNumber from "bignumber.js";
 
 export declare type Account = {
   actions: any;
-  approve: BigNumber;
+  approve: string[];
   expired: number;
 };
 
