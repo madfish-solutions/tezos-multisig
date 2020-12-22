@@ -122,6 +122,10 @@ function control (const action : operator_info; const s : storage) : storage is
     if Tezos.sender = Tezos.self_address then skip
     else failwith("Multisig/not-permitted");
 
+    (* Ensure not set  *)
+    if action.allowed =/= Set.mem(action.manager, s.managers) then skip
+    else failwith("Multisig/invalid-admin");
+
     (* Set manager permissions *)
     s.managers := if action.allowed then Set.add(action.manager, s.managers)
     else Set.remove(action.manager, s.managers);

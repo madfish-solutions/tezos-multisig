@@ -14,6 +14,7 @@ contract("Default()", function () {
   });
 
   it("should receive tokens from implicit account", async function () {
+    await multisig.updateProvider("alice");
     const amount = 1000000;
     const multisigAddress = multisig.contract.address;
     const initialBalance = await tezos.tz.getBalance(multisigAddress);
@@ -27,6 +28,7 @@ contract("Default()", function () {
   });
 
   it("should receive tokens from explicit account", async function () {
+    await multisig.updateProvider("alice");
     const amount = 1000000;
     const tokensResender = await CTTokensResender.new(undefined);
     const multisigAddress = multisig.contract.address;

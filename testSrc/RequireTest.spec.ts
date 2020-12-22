@@ -11,7 +11,7 @@ import BigNumber from "bignumber.js";
 
 const CMultisig = artifacts.require("Multisig");
 
-contract.only("Require()", function () {
+contract("Require()", function () {
   let multisig: Multisig;
 
   before(async function () {
@@ -19,6 +19,7 @@ contract.only("Require()", function () {
   });
 
   it("should update amount of required keys sent from wallet", async function () {
+    await multisig.updateProvider("alice");
     const count = 1;
     const multisigAddress = multisig.contract.address;
     await updateRequireData(multisigAddress, count);
@@ -34,10 +35,10 @@ contract.only("Require()", function () {
       count,
       "Number of required confirmations should be 1"
     );
-    await multisig.updateProvider("alice");
   });
 
   it("shouldn't accept update amount of required keys sent from admin", async function () {
+    await multisig.updateProvider("alice");
     const count = 1;
     await rejects(
       multisig.require(count),
@@ -51,10 +52,10 @@ contract.only("Require()", function () {
       },
       "Should fail"
     );
-    await multisig.updateProvider("alice");
   });
 
   it("shouldn't accept update amount of required keys sent from unathorized user", async function () {
+    await multisig.updateProvider("alice");
     const count = 1;
     await multisig.updateProvider("carol");
     await rejects(
@@ -69,10 +70,10 @@ contract.only("Require()", function () {
       },
       "Should fail"
     );
-    await multisig.updateProvider("alice");
   });
 
   it("shouldn't update amount of required keys to 0", async function () {
+    await multisig.updateProvider("alice");
     const count = 0;
     const multisigAddress = multisig.contract.address;
     await updateRequireData(multisigAddress, count);
@@ -93,6 +94,7 @@ contract.only("Require()", function () {
   });
 
   it("shouldn't update amount of required keys to more then amount of admins", async function () {
+    await multisig.updateProvider("alice");
     const count = 4;
     const multisigAddress = multisig.contract.address;
     await updateRequireData(multisigAddress, count);
@@ -113,6 +115,7 @@ contract.only("Require()", function () {
   });
 
   it("should update amount of required keys to 2", async function () {
+    await multisig.updateProvider("alice");
     const count = 2;
     const multisigAddress = multisig.contract.address;
     await updateRequireData(multisigAddress, count);
@@ -126,10 +129,10 @@ contract.only("Require()", function () {
       count,
       "Number of required confirmations should be 2"
     );
-    await multisig.updateProvider("alice");
   });
 
   it("should update amount of required keys to 1", async function () {
+    await multisig.updateProvider("alice");
     const count = 1;
     const multisigAddress = multisig.contract.address;
     await updateRequireData(multisigAddress, count);
@@ -145,6 +148,5 @@ contract.only("Require()", function () {
       count,
       "Number of required confirmations should be 1"
     );
-    await multisig.updateProvider("alice");
   });
 });

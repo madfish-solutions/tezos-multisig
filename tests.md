@@ -216,3 +216,31 @@ Scenario 1: Test setting:
 [x] to enough
 [x] to max
 [x] to more than admins count
+
+### Test Item: Control Entrypoint
+
+Scope: Test adding/removing members from users with different permissions.
+Action: Invoke the Control entrypoint.
+Test Notes and Preconditions: Make sure the configuration can be set by admins only.
+Verification Steps: Verify the change of the admin set only from the wallet is permitted.
+
+Scenario 1: Test require:
+
+[x] from one of the admins
+[x] from one without admin permissions
+[x] from the wallet
+
+Scope: Test updating the admin right of different kind of users.
+Action: Invoke the Control entrypoint.
+Test Notes and Preconditions: Ensure the only new admin can be added and existed can be removed.
+Verification Steps: Verify the admin set is updated expectedly.
+
+Scenario 1: Test adding to admins:
+
+[x] the current admin
+[x] the new admin
+
+Scenario 2: Test removing from admins:
+
+[] the current admin
+[] the new admin

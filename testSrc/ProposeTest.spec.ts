@@ -14,29 +14,33 @@ contract("Propose()", function () {
   });
 
   it("should accept one proposal", async function () {
+    await multisig.updateProvider("alice");
+    const initialStorage = multisig.storage;
     await multisig.propose("transfer", false, standardDelay);
     const finalStorage = multisig.storage;
     strictEqual(
       finalStorage.id_count.toNumber(),
-      1,
+      initialStorage.id_count.toNumber() + 1,
       "The number of requests should increase"
     );
   });
 
   it("should accept more than one proposal", async function () {
+    await multisig.updateProvider("alice");
     const count = 4;
     const initialStorage = multisig.storage;
-    for (let i = initialStorage.id_count.toNumber(); i < count; i++)
+    for (let i = 0; i < count; i++)
       await multisig.propose("transfer", false, standardDelay);
     const finalStorage = multisig.storage;
     strictEqual(
       finalStorage.id_count.toNumber(),
-      count,
+      initialStorage.id_count.toNumber() + count,
       "The number of requests should increase"
     );
   });
 
   it("should accept proposal from admin", async function () {
+    await multisig.updateProvider("alice");
     const initialStorage = multisig.storage;
     await multisig.propose("transfer", false, standardDelay);
     await multisig.updateStorage({ pendings: [new BigNumber(0)] });
@@ -49,7 +53,6 @@ contract("Propose()", function () {
   });
 
   it("shouldn't accept proposal from user without admin rights", async function () {
-    const amount = 1000000;
     await multisig.updateProvider("carol");
     await rejects(
       multisig.propose("transfer", false, standardDelay),
@@ -63,10 +66,10 @@ contract("Propose()", function () {
       },
       "Should fail"
     );
-    await multisig.updateProvider("alice");
   });
 
   it("should accept transfer proposal", async function () {
+    await multisig.updateProvider("alice");
     const initialStorage = multisig.storage;
     await multisig.propose("transfer", false, standardDelay);
     const finalStorage = multisig.storage;
@@ -78,6 +81,7 @@ contract("Propose()", function () {
   });
 
   it("should accept batch proposal", async function () {
+    await multisig.updateProvider("alice");
     const initialStorage = multisig.storage;
     await multisig.propose("batch", false, standardDelay);
     const finalStorage = multisig.storage;
@@ -89,6 +93,7 @@ contract("Propose()", function () {
   });
 
   it("should accept proposal of invoking contract", async function () {
+    await multisig.updateProvider("alice");
     const initialStorage = multisig.storage;
     await multisig.propose("invoke", false, standardDelay);
     const finalStorage = multisig.storage;
@@ -100,6 +105,7 @@ contract("Propose()", function () {
   });
 
   it("shouldn't accept proposal with too long delay", async function () {
+    await multisig.updateProvider("alice");
     const longDelay = 20000000;
     await rejects(
       multisig.propose("transfer", false, longDelay),
@@ -116,6 +122,7 @@ contract("Propose()", function () {
   });
 
   it("shouldn't accept proposal with too short delay", async function () {
+    await multisig.updateProvider("alice");
     const shortDelay = 1000;
     await rejects(
       multisig.propose("transfer", false, shortDelay),
@@ -132,20 +139,24 @@ contract("Propose()", function () {
   });
 
   it("should accept proposal with delay in range", async function () {
+    await multisig.updateProvider("alice");
     await multisig.propose("invoke", false, standardDelay);
   });
 
   it("should accept proposal with minimal delay ", async function () {
+    await multisig.updateProvider("alice");
     const minimalDelay = 3600;
     await multisig.propose("invoke", false, minimalDelay);
   });
 
   it("should accept proposal with maximal delay ", async function () {
+    await multisig.updateProvider("alice");
     const maximalDelay = 15552000;
     await multisig.propose("invoke", false, maximalDelay);
   });
 
   it("shouldn't approve proposal during suggestion if flag isn't set", async function () {
+    await multisig.updateProvider("alice");
     await multisig.propose("transfer", false, standardDelay);
     const id = multisig.storage.id_count.toNumber() - 1;
     await multisig.updateStorage({ pendings: [new BigNumber(id)] });
@@ -158,6 +169,7 @@ contract("Propose()", function () {
   });
 
   it("should approve proposal during suggestion if flag is set", async function () {
+    await multisig.updateProvider("alice");
     await multisig.propose("transfer", true, standardDelay);
     const id = multisig.storage.id_count.toNumber() - 1;
     await multisig.updateStorage({ pendings: [new BigNumber(id)] });

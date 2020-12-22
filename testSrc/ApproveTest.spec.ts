@@ -14,6 +14,7 @@ contract("Approve()", function () {
   });
 
   it("should accept proposal from admin", async function () {
+    await multisig.updateProvider("alice");
     await multisig.propose("transfer", false, standardDelay);
     const id = multisig.storage.id_count.toNumber() - 1;
     await multisig.approve(id);
@@ -27,6 +28,7 @@ contract("Approve()", function () {
   });
 
   it("shouldn't accept proposal from user without admin rights", async function () {
+    await multisig.updateProvider("alice");
     await multisig.propose("transfer", false, standardDelay);
     const id = multisig.storage.id_count.toNumber() - 1;
     await multisig.updateProvider("carol");
@@ -42,10 +44,10 @@ contract("Approve()", function () {
       },
       "Should fail"
     );
-    await multisig.updateProvider("alice");
   });
 
   it("should approve existed proposal", async function () {
+    await multisig.updateProvider("alice");
     await multisig.propose("transfer", true, standardDelay);
     const id = multisig.storage.id_count.toNumber() - 1;
     await multisig.updateProvider("bob");
@@ -57,7 +59,6 @@ contract("Approve()", function () {
       2,
       "The number of confiramtions should 1"
     );
-    await multisig.updateProvider("alice");
   });
 
   it("shouldn't approve non-existed proposal", async function () {
@@ -75,10 +76,10 @@ contract("Approve()", function () {
       },
       "Should fail"
     );
-    await multisig.updateProvider("alice");
   });
 
   it("shouldn't approve twice", async function () {
+    await multisig.updateProvider("alice");
     await multisig.propose("transfer", false, standardDelay);
     const id = multisig.storage.id_count.toNumber() - 1;
     await multisig.approve(id);
@@ -93,6 +94,7 @@ contract("Approve()", function () {
   });
 
   it("shouldn't approve if approved during suggestion stage", async function () {
+    await multisig.updateProvider("alice");
     await multisig.propose("transfer", true, standardDelay);
     const id = multisig.storage.id_count.toNumber() - 1;
     await rejects(
@@ -106,6 +108,7 @@ contract("Approve()", function () {
   });
 
   it("should approve if not approved during suggestion", async function () {
+    await multisig.updateProvider("alice");
     await multisig.propose("transfer", false, standardDelay);
     const id = multisig.storage.id_count.toNumber() - 1;
     await multisig.approve(id);
@@ -116,10 +119,10 @@ contract("Approve()", function () {
       1,
       "The number of confiramtions should 1"
     );
-    await multisig.updateProvider("alice");
   });
 
   it("should approve before deadline", async function () {
+    await multisig.updateProvider("alice");
     await multisig.propose("transfer", false, standardDelay);
     const id = multisig.storage.id_count.toNumber() - 1;
     await multisig.approve(id);
@@ -130,10 +133,10 @@ contract("Approve()", function () {
       1,
       "The number of confiramtions should 1"
     );
-    await multisig.updateProvider("alice");
   });
 
   it("shouldn't approve after deadline", async function () {
+    await multisig.updateProvider("alice");
     const minimalDeadline = 3600;
     await multisig.propose("transfer", false, minimalDeadline);
     const id = multisig.storage.id_count.toNumber() - 1;

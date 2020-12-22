@@ -21,6 +21,7 @@ contract("Execute()", function () {
   });
 
   it("should execute proposal from admin", async function () {
+    await multisig.updateProvider("alice");
     const amount = tezPrecision;
     await multisig.propose("transfer", true, standardDelay);
     const id = multisig.storage.id_count.toNumber() - 1;
@@ -35,10 +36,10 @@ contract("Execute()", function () {
       undefined,
       "The executed transaction should be removed from map"
     );
-    await multisig.updateProvider("alice");
   });
 
   it("shouldn't accept proposal from user without admin rights", async function () {
+    await multisig.updateProvider("alice");
     await multisig.propose("transfer", false, standardDelay);
     const id = multisig.storage.id_count.toNumber() - 1;
     await multisig.updateProvider("carol");
@@ -54,10 +55,10 @@ contract("Execute()", function () {
       },
       "Should fail"
     );
-    await multisig.updateProvider("alice");
   });
 
   it("shouldn't execute proposal if there are no confirmations", async function () {
+    await multisig.updateProvider("alice");
     await multisig.propose("transfer", false, standardDelay);
     const id = multisig.storage.id_count.toNumber() - 1;
     await rejects(
@@ -75,6 +76,7 @@ contract("Execute()", function () {
   });
 
   it("shouldn't execute proposal if there is only 1 confirmation", async function () {
+    await multisig.updateProvider("alice");
     await multisig.propose("transfer", true, standardDelay);
     const id = multisig.storage.id_count.toNumber() - 1;
     await rejects(
@@ -92,6 +94,7 @@ contract("Execute()", function () {
   });
 
   it("should accept proposal execution if there are enough confirmations", async function () {
+    await multisig.updateProvider("alice");
     const amount = tezPrecision;
     await multisig.propose("transfer", true, standardDelay);
     const id = multisig.storage.id_count.toNumber() - 1;
@@ -106,10 +109,10 @@ contract("Execute()", function () {
       undefined,
       "The executed transaction should be removed from map"
     );
-    await multisig.updateProvider("alice");
   });
 
   it("should execute existed proposal", async function () {
+    await multisig.updateProvider("alice");
     const amount = tezPrecision;
     await multisig.propose("transfer", true, standardDelay);
     const id = multisig.storage.id_count.toNumber() - 1;
@@ -124,10 +127,10 @@ contract("Execute()", function () {
       undefined,
       "The executed transaction should be removed from map"
     );
-    await multisig.updateProvider("alice");
   });
 
   it("shouldn't execute non-existed proposal", async function () {
+    await multisig.updateProvider("alice");
     const id = multisig.storage.id_count.toNumber();
     await multisig.updateProvider("bob");
     await rejects(
@@ -142,10 +145,10 @@ contract("Execute()", function () {
       },
       "Should fail"
     );
-    await multisig.updateProvider("alice");
   });
 
   it("shouldn't execute proposal twice", async function () {
+    await multisig.updateProvider("alice");
     const amount = tezPrecision;
     await multisig.propose("transfer", true, standardDelay);
     const id = multisig.storage.id_count.toNumber() - 1;
@@ -165,10 +168,10 @@ contract("Execute()", function () {
       },
       "Should fail"
     );
-    await multisig.updateProvider("alice");
   });
 
   it("should execute proposal before deadline", async function () {
+    await multisig.updateProvider("alice");
     const amount = tezPrecision;
     await multisig.propose("transfer", true, standardDelay);
     const id = multisig.storage.id_count.toNumber() - 1;
@@ -183,10 +186,10 @@ contract("Execute()", function () {
       undefined,
       "The executed transaction should be removed from map"
     );
-    await multisig.updateProvider("alice");
   });
 
   it("should execute transfer proposal", async function () {
+    await multisig.updateProvider("alice");
     const amount = tezPrecision;
     await multisig.propose("transfer", true, standardDelay);
     const id = multisig.storage.id_count.toNumber() - 1;
@@ -201,10 +204,10 @@ contract("Execute()", function () {
       undefined,
       "The executed transaction should be removed from map"
     );
-    await multisig.updateProvider("alice");
   });
 
   it("should execute batch proposal", async function () {
+    await multisig.updateProvider("alice");
     const amount = 3 * tezPrecision;
     await multisig.propose("batch", true, standardDelay);
     const id = multisig.storage.id_count.toNumber() - 1;
@@ -219,10 +222,10 @@ contract("Execute()", function () {
       undefined,
       "The executed transaction should be removed from map"
     );
-    await multisig.updateProvider("alice");
   });
 
   it("should execute invoke proposal", async function () {
+    await multisig.updateProvider("alice");
     const fa12 = await CTFA12.new(tokenStorage);
     await updateAddressInInvoke(fa12.address);
     const amount = 100;
@@ -240,6 +243,5 @@ contract("Execute()", function () {
       undefined,
       "The executed transaction should be removed from map"
     );
-    await multisig.updateProvider("alice");
   });
 });

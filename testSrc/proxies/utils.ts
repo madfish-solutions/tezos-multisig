@@ -97,3 +97,22 @@ export async function updateRequireData(address: string, count: number) {
     .replace(/count : nat = [\d]+n/g, newCountStr);
   await writeFileSync(path, result, "utf8");
 }
+
+export async function updateControlData(
+  address: string,
+  allowed: boolean,
+  manager: string
+) {
+  const file = "../../testSrc/partial/control.ligo";
+  const path = join(__dirname, file);
+  const data = await readFileSync(path, "utf8");
+  const newMultisigStr = 'multisig : address = ("' + address + '"';
+  const newManagerStr = 'manager : address = ("' + manager + '"';
+  const newAllowedStr =
+    "allowed : bool = " + (allowed ? "True" : "False") + ";";
+  const result = data
+    .replace(/multisig : address = \("[\w\d]+"/g, newMultisigStr)
+    .replace(/manager : address = \("[\w\d]+"/g, newManagerStr)
+    .replace(/allowed : bool = [\w]+;/g, newAllowedStr);
+  await writeFileSync(path, result, "utf8");
+}
