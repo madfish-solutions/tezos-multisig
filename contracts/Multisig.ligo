@@ -134,6 +134,10 @@ function require (const new_required : nat; const s : storage) : storage is
     if Tezos.sender = Tezos.self_address then skip
     else failwith("Multisig/not-permitted");
 
+    (* Ensure new_required is in range *)
+    if new_required > 0n and new_required < Set.size(s.managers) then skip
+    else failwith("Multisig/invalid-require");
+
     (* Set required amount of confirmations *)
     s.required := new_required;
   } with s

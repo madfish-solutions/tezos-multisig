@@ -191,3 +191,28 @@ Verification Steps: Verify the second execute request fails.
 Scenario 1: Test execute:
 
 [x] twice
+
+### Test Item: Require Entrypoint
+
+Scope: Test require from users with different permissions.
+Action: Invoke the Require entrypoint.
+Test Notes and Preconditions: Make sure the require amount of confirmmations can be executed by admins only.
+Verification Steps: Verify change of the amount of confirmmations only from the wallet is permitted.
+
+Scenario 1: Test require:
+
+[] from one of the admins
+[] from one without admin permissions
+[] from the wallet
+
+Scope: Test setting the amount of confiramtions is in the valid range.
+Action: Invoke the Require entrypoint.
+Test Notes and Preconditions: Ensure the amount of confirmmations can be only between 1 and admins amount.
+Verification Steps: Verify the amount of confirmmations can only be betweem 1 and amount of admins.
+
+Scenario 1: Test setting:
+
+[] to none
+[] to enough
+[] to max
+[] to more than admins count
