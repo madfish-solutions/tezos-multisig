@@ -85,3 +85,15 @@ export async function updateAddressInInvoke(address: string) {
   const result = data.replace(/token : address = \("[\w\d]+"/g, newTokenStr);
   await writeFileSync(path, result, "utf8");
 }
+
+export async function updateRequireData(address: string, count: number) {
+  const file = "../../testSrc/partial/require.ligo";
+  const path = join(__dirname, file);
+  const data = await readFileSync(path, "utf8");
+  const newMultisigStr = 'multisig : address = ("' + address + '"';
+  const newCountStr = "count : nat = " + count + "n";
+  const result = data
+    .replace(/multisig : address = \("[\w\d]+"/g, newMultisigStr)
+    .replace(/count : nat = [\d]+n/g, newCountStr);
+  await writeFileSync(path, result, "utf8");
+}

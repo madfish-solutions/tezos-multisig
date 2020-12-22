@@ -201,9 +201,9 @@ Verification Steps: Verify change of the amount of confirmmations only from the 
 
 Scenario 1: Test require:
 
-[] from one of the admins
-[] from one without admin permissions
-[] from the wallet
+[x] from one of the admins
+[x] from one without admin permissions
+[x] from the wallet
 
 Scope: Test setting the amount of confiramtions is in the valid range.
 Action: Invoke the Require entrypoint.
@@ -212,7 +212,7 @@ Verification Steps: Verify the amount of confirmmations can only be betweem 1 an
 
 Scenario 1: Test setting:
 
-[] to none
-[] to enough
-[] to max
-[] to more than admins count
+[x] to none
+[x] to enough
+[x] to max
+[x] to more than admins count

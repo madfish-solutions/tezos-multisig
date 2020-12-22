@@ -13,7 +13,7 @@ import BigNumber from "bignumber.js";
 const CMultisig = artifacts.require("Multisig");
 const CTFA12 = artifacts.require("TFA12");
 
-contract.only("Execute()", function () {
+contract("Execute()", function () {
   let multisig: Multisig;
 
   before(async function () {
