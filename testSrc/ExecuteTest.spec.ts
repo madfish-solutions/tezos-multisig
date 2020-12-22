@@ -1,10 +1,17 @@
 import { Multisig } from "./proxies/multisig";
 import { defaultAccountTokenInfo } from "./constants";
 import { strictEqual, ok, notStrictEqual, rejects } from "assert";
-import { bakeBlocks, tezPrecision, standardDelay } from "./proxies/utils";
+import {
+  bakeBlocks,
+  tezPrecision,
+  standardDelay,
+  updateAddressInInvoke,
+} from "./proxies/utils";
+import tokenStorage from "./storage/FA12";
 import BigNumber from "bignumber.js";
 
 const CMultisig = artifacts.require("Multisig");
+const CTFA12 = artifacts.require("TFA12");
 
 contract.only("Execute()", function () {
   let multisig: Multisig;
@@ -157,6 +164,81 @@ contract.only("Execute()", function () {
         return true;
       },
       "Should fail"
+    );
+    await multisig.updateProvider("alice");
+  });
+
+  it("should execute proposal before deadline", async function () {
+    const amount = tezPrecision;
+    await multisig.propose("transfer", true, standardDelay);
+    const id = multisig.storage.id_count.toNumber() - 1;
+    await multisig.updateProvider("bob");
+    await multisig.approve(id);
+    await multisig.default(amount);
+    await multisig.execute(id);
+    await multisig.updateStorage({ pendings: [new BigNumber(id)] });
+    const finalStorage = multisig.storage;
+    strictEqual(
+      finalStorage.pendings[id],
+      undefined,
+      "The executed transaction should be removed from map"
+    );
+    await multisig.updateProvider("alice");
+  });
+
+  it("should execute transfer proposal", async function () {
+    const amount = tezPrecision;
+    await multisig.propose("transfer", true, standardDelay);
+    const id = multisig.storage.id_count.toNumber() - 1;
+    await multisig.updateProvider("bob");
+    await multisig.approve(id);
+    await multisig.default(amount);
+    await multisig.execute(id);
+    await multisig.updateStorage({ pendings: [new BigNumber(id)] });
+    const finalStorage = multisig.storage;
+    strictEqual(
+      finalStorage.pendings[id],
+      undefined,
+      "The executed transaction should be removed from map"
+    );
+    await multisig.updateProvider("alice");
+  });
+
+  it("should execute batch proposal", async function () {
+    const amount = 3 * tezPrecision;
+    await multisig.propose("batch", true, standardDelay);
+    const id = multisig.storage.id_count.toNumber() - 1;
+    await multisig.updateProvider("bob");
+    await multisig.approve(id);
+    await multisig.default(amount);
+    await multisig.execute(id);
+    await multisig.updateStorage({ pendings: [new BigNumber(id)] });
+    const finalStorage = multisig.storage;
+    strictEqual(
+      finalStorage.pendings[id],
+      undefined,
+      "The executed transaction should be removed from map"
+    );
+    await multisig.updateProvider("alice");
+  });
+
+  it("should execute invoke proposal", async function () {
+    const fa12 = await CTFA12.new(tokenStorage);
+    await updateAddressInInvoke(fa12.address);
+    const amount = 100;
+    const multisigAddress = multisig.contract.address;
+    await fa12.approve(multisigAddress, amount);
+    await multisig.propose("invoke", true, standardDelay);
+    const id = multisig.storage.id_count.toNumber() - 1;
+    await multisig.updateProvider("bob");
+    await multisig.approve(id);
+    await multisig.execute(id);
+    await multisig.updateStorage({ pendings: [new BigNumber(id)] });
+    const finalStorage = multisig.storage;
+    strictEqual(
+      finalStorage.pendings[id],
+      undefined,
+      "The executed transaction should be removed from map"
     );
     await multisig.updateProvider("alice");
   });

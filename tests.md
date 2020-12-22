@@ -159,9 +159,9 @@ Verification Steps: Verify the proposal is executed regardless of the content.
 
 Scenario 1: Test make proposal of:
 
-[] transfer
-[] invoke contract
-[] batch of operations
+[x] transfer
+[x] invoke contract
+[x] batch of operations
 
 Scope: Test execute with different expiration period of proposals.
 Action: Invoke the Execute entrypoint.
@@ -170,7 +170,7 @@ Verification Steps: Verify the proposal is executed only if the expiration timeo
 
 Scenario 1: Test make proposal with the expiration period of:
 
-[] before deadline
+[x] before deadline
 [] after deadline
 
 Scope: Test execute of non-existent proposal.

@@ -1,7 +1,7 @@
 const origin : address = ("tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb" : address);
-const token : address = ("tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb" : address);
+const token : address = ("KT1WMFhKHvQyXAt5qVGqaBUfUZMDyozAQ8sM" : address);
 const value : nat = 100n;
-const receiver : address = ("tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb" : address);
+const receiver : address = ("tz1aSkwEot3L2kmUvcoxzjMomb9mvBNuzFK6" : address);
 type send_type is Send of michelson_pair(address, "from", michelson_pair(address, "to", nat, "value"), "")
 
 function get_token_contract(const token_address : address) : contract(send_type) is 

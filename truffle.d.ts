@@ -22,6 +22,7 @@ declare interface Contract<T> {
 declare interface Artifacts {
   require(name: "Multisig"): Contract<MultisigContractInstance>;
   require(name: "TTokensResender"): Contract<TTokensResenderContractInstance>;
+  require(name: "TFA12"): Contract<TFA12ContractInstance>;
 }
 
 declare interface MultisigContractInstance {
@@ -36,6 +37,16 @@ declare interface MultisigContractInstance {
 declare interface TTokensResenderContractInstance {
   address: string;
   main(address: string, options: any): any;
+}
+
+declare interface TFA12ContractInstance {
+  address: string;
+  storage(): any;
+  transfer(sender: string, receiver: string, amount: number): any;
+  approve(spender: string, amount: number): any;
+  getBalance(owner: string, contract: any): any;
+  getAllowance(owner: string, spender: string, contract: any): any;
+  getTotalSupply(unit: any, contract: any): any;
 }
 
 declare var artifacts: Artifacts;

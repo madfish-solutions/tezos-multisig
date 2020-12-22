@@ -4,6 +4,8 @@ import { TransactionOperation } from "@taquito/taquito/dist/types/operations/tra
 import accounts from "../accounts/accounts";
 export const tezPrecision = 1e6;
 export const standardDelay = 200000;
+import { readFileSync, writeFileSync } from "fs";
+import { join } from "path";
 
 export function getLigo(isDockerizedLigo: boolean): string {
   let path = "ligo";
@@ -73,4 +75,13 @@ export async function bakeBlocks(count: number) {
     });
     await operation.confirmation();
   }
+}
+
+export async function updateAddressInInvoke(address: string) {
+  const file = "../../testSrc/partial/invoke.ligo";
+  const path = join(__dirname, file);
+  const data = await readFileSync(path, "utf8");
+  const newTokenStr = 'token : address = ("' + address + '"';
+  const result = data.replace(/token : address = \("[\w\d]+"/g, newTokenStr);
+  await writeFileSync(path, result, "utf8");
 }
