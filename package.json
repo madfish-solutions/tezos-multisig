@@ -1,7 +1,7 @@
 {
-  "name": "tezos-bare-box",
-  "version": "2.0.0",
-  "description": "Tezos Bare Box =================",
+  "name": "tezos-multisig",
+  "version": "0.1.0",
+  "description": "Miltisig implementation on Ligo",
   "dependencies": {
     "@taquito/signer": "^7.1.0-beta.0",
     "@taquito/taquito": "^7.1.0-beta.0",
@@ -19,21 +19,7 @@
   "scripts": {
     "start-sandbox": "ganache-cli --flavor tezos --seed alice",
     "clean": "rm -rf ./build",
+    "migrate": "truffle migrate",
     "test": "tsc && truffle test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/truffle-box/tezos-bare-box.git"
-  },
-  "keywords": [
-    "tezos",
-    "blockchain",
-    "truffle"
-  ],
-  "author": "Cruz Molina <cruz@trufflesuite.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/truffle-box/tezos-bare-box/issues"
-  },
-  "homepage": "https://github.com/truffle-box/tezos-bare-box#readme"
+  }
 }
