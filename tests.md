@@ -23,11 +23,11 @@ Verification Steps: Verify the balance of the contract grows.
 
 Scenario 1: Test transfer from implicit account
 
-[x] send from Alice
+- [x] send from Alice
 
 Scenario 2: Test transfer from another contract
 
-[x] send from Carol
+- [x] send from Carol
 
 ### Test Item: Propose Entrypoint
 
@@ -38,8 +38,8 @@ Verification Steps: Verify the operation only from authorized users are permitte
 
 Scenario 1: Test make proposal:
 
-[x] from one of the admins
-[x] from one without admin permissions
+- [x] from one of the admins
+- [x] from one without admin permissions
 
 Scope: Test different amount of proposals.
 Action: Invoke the Propose entrypoint.
@@ -48,8 +48,8 @@ Verification Steps: Verify the proposal is added even the others aren't executed
 
 Scenario 1: Test make proposal:
 
-[x] 1 proposal
-[x] 4 proposals
+- [x] 1 proposal
+- [x] 4 proposals
 
 Scope: Test different kinds of proposals.
 Action: Invoke the Propose entrypoint.
@@ -58,9 +58,9 @@ Verification Steps: Verify the proposal is added regardless of the content.
 
 Scenario 1: Test make proposal of:
 
-[x] transfer
-[x] invoke contract
-[x] batch of operations
+- [x] transfer
+- [x] invoke contract
+- [x] batch of operations
 
 Scope: Test different expiration period of proposals.
 Action: Invoke the Propose entrypoint.
@@ -69,11 +69,11 @@ Verification Steps: Verify the proposal is added only if the expiration timeout 
 
 Scenario 1: Test make proposal with the expiration period of:
 
-[x] 20000000 seconds
-[x] 1000 seconds
-[x] 3600 seconds
-[x] 15552000 seconds
-[x] 200000 seconds
+- [x] 20000000 seconds
+- [x] 1000 seconds
+- [x] 3600 seconds
+- [x] 15552000 seconds
+- [x] 200000 seconds
 
 Scope: Test confirm option of the proposal suggestion.
 Action: Invoke the Propose entrypoint.
@@ -82,8 +82,8 @@ Verification Steps: Verify the proposal is confirmed by sender if the option is 
 
 Scenario 1: Test make proposal:
 
-[x] with approve=true
-[x] with approve=false
+- [x] with approve=true
+- [x] with approve=false
 
 ### Test Item: Approve Entrypoint
 
@@ -94,8 +94,8 @@ Verification Steps: Verify the approvals only from authorized users are permitte
 
 Scenario 1: Test approve:
 
-[x] from one of the admins
-[x] from one without admin permissions
+- [x] from one of the admins
+- [x] from one without admin permissions
 
 Scope: Test approve in delay range.
 Action: Invoke the Approve entrypoint.
@@ -104,8 +104,8 @@ Verification Steps: Verify the expired transaction is approved if is valid or re
 
 Scenario 1: Test approve:
 
-[x] before deadline
-[] after deadline
+- [x] before deadline
+- [] after deadline
 
 Scope: Test approve of non-existent proposal.
 Action: Invoke the Approve entrypoint.
@@ -114,8 +114,8 @@ Verification Steps: Verify the approve of non-existed fails.
 
 Scenario 1: Test approve:
 
-[x] existed proposal
-[x] non-existed proposal
+- [x] existed proposal
+- [x] non-existed proposal
 
 Scope: Test approve twice.
 Action: Invoke the Approve entrypoint.
@@ -124,9 +124,9 @@ Verification Steps: Verify the second approve fails.
 
 Scenario 1: Test approve:
 
-[x] approve twice
-[x] approve after submission without approve
-[x] approve after submission with approve
+- [x] approve twice
+- [x] approve after submission without approve
+- [x] approve after submission with approve
 
 ### Test Item: Execute Entrypoint
 
@@ -137,8 +137,8 @@ Verification Steps: Verify the approvals only from authorized users are permitte
 
 Scenario 1: Test execute:
 
-[x] from one of the admins
-[x] from one without admin permissions
+- [x] from one of the admins
+- [x] from one without admin permissions
 
 Scope: Test execute with different confirmations.
 Action: Invoke the Execute entrypoint.
@@ -147,10 +147,10 @@ Verification Steps: Verify the approvals only from authorized users are permitte
 
 Scenario 1: Test execute:
 
-[x] with no confiramation
-[x] with not enough confirmations
-[x] with enough confirmations
-[] with more confirmations
+- [x] with no confiramation
+- [x] with not enough confirmations
+- [x] with enough confirmations
+- [] with more confirmations
 
 Scope: Test different kinds of proposals.
 Action: Invoke the Execute entrypoint.
@@ -159,10 +159,10 @@ Verification Steps: Verify the proposal is executed regardless of the content.
 
 Scenario 1: Test make proposal of:
 
-[x] transfer
-[x] invoke contract
-[x] batch of operations
-[] delegation
+- [x] transfer
+- [x] invoke contract
+- [x] batch of operations
+- [] delegation
 
 Scope: Test execute with different expiration period of proposals.
 Action: Invoke the Execute entrypoint.
@@ -171,8 +171,8 @@ Verification Steps: Verify the proposal is executed only if the expiration timeo
 
 Scenario 1: Test make proposal with the expiration period of:
 
-[x] before deadline
-[] after deadline
+- [x] before deadline
+- [] after deadline
 
 Scope: Test execute of non-existent proposal.
 Action: Invoke the Execute entrypoint.
@@ -181,8 +181,8 @@ Verification Steps: Verify the execute of non-existed proposal fails.
 
 Scenario 1: Test execute:
 
-[x] existed proposal
-[x] non-existed proposal
+- [x] existed proposal
+- [x] non-existed proposal
 
 Scope: Test execute twice.
 Action: Invoke the Execute entrypoint.
@@ -191,7 +191,7 @@ Verification Steps: Verify the second execute request fails.
 
 Scenario 1: Test execute:
 
-[x] twice
+- [x] twice
 
 ### Test Item: Require Entrypoint
 
@@ -202,9 +202,9 @@ Verification Steps: Verify change of the amount of confirmmations only from the 
 
 Scenario 1: Test require:
 
-[x] from one of the admins
-[x] from one without admin permissions
-[x] from the wallet
+- [x] from one of the admins
+- [x] from one without admin permissions
+- [x] from the wallet
 
 Scope: Test setting the amount of confiramtions is in the valid range.
 Action: Invoke the Require entrypoint.
@@ -213,10 +213,10 @@ Verification Steps: Verify the amount of confirmmations can only be betweem 1 an
 
 Scenario 1: Test setting:
 
-[x] to none
-[x] to enough
-[x] to max
-[x] to more than admins count
+- [x] to none
+- [x] to enough
+- [x] to max
+- [x] to more than admins count
 
 ### Test Item: Control Entrypoint
 
@@ -227,9 +227,9 @@ Verification Steps: Verify the change of the admin set only from the wallet is p
 
 Scenario 1: Test require:
 
-[x] from one of the admins
-[x] from one without admin permissions
-[x] from the wallet
+- [x] from one of the admins
+- [x] from one without admin permissions
+- [x] from the wallet
 
 Scope: Test updating the admin right of different kind of users.
 Action: Invoke the Control entrypoint.
@@ -238,10 +238,10 @@ Verification Steps: Verify the admin set is updated expectedly.
 
 Scenario 1: Test adding to admins:
 
-[x] the current admin
-[x] the new admin
+- [x] the current admin
+- [x] the new admin
 
 Scenario 2: Test removing from admins:
 
-[x] the current admin
-[x] the new admin
+- [x] the current admin
+- [x] the new admin
