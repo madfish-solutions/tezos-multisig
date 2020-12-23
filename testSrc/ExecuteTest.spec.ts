@@ -208,6 +208,24 @@ contract("Execute()", function () {
     );
   });
 
+  it("should execute delegate proposal", async function () {
+    await multisig.updateProvider("alice");
+    const amount = tezPrecision;
+    await multisig.propose("delegate", true, standardDelay);
+    const id = multisig.storage.id_count.toNumber() - 1;
+    await multisig.updateProvider("bob");
+    await multisig.approve(id);
+    await multisig.default(amount);
+    await multisig.execute(id);
+    await multisig.updateStorage({ pendings: [new BigNumber(id)] });
+    const finalStorage = multisig.storage;
+    strictEqual(
+      finalStorage.pendings[id],
+      undefined,
+      "The executed transaction should be removed from map"
+    );
+  });
+
   it("should execute batch proposal", async function () {
     await multisig.updateProvider("alice");
     const amount = 3 * tezPrecision;
