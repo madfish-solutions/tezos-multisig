@@ -162,6 +162,7 @@ Scenario 1: Test make proposal of:
 [x] transfer
 [x] invoke contract
 [x] batch of operations
+[] delegation
 
 Scope: Test execute with different expiration period of proposals.
 Action: Invoke the Execute entrypoint.
