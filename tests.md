@@ -105,7 +105,7 @@ Verification Steps: Verify the expired transaction is approved if is valid or re
 Scenario 1: Test approve:
 
 - [x] before deadline
-- [] after deadline
+- [ ] after deadline
 
 Scope: Test approve of non-existent proposal.
 Action: Invoke the Approve entrypoint.
@@ -150,7 +150,7 @@ Scenario 1: Test execute:
 - [x] with no confiramation
 - [x] with not enough confirmations
 - [x] with enough confirmations
-- [] with more confirmations
+- [ ] with more confirmations
 
 Scope: Test different kinds of proposals.
 Action: Invoke the Execute entrypoint.
@@ -162,7 +162,7 @@ Scenario 1: Test make proposal of:
 - [x] transfer
 - [x] invoke contract
 - [x] batch of operations
-- [] delegation
+- [ ] delegation
 
 Scope: Test execute with different expiration period of proposals.
 Action: Invoke the Execute entrypoint.
@@ -172,7 +172,7 @@ Verification Steps: Verify the proposal is executed only if the expiration timeo
 Scenario 1: Test make proposal with the expiration period of:
 
 - [x] before deadline
-- [] after deadline
+- [ ] after deadline
 
 Scope: Test execute of non-existent proposal.
 Action: Invoke the Execute entrypoint.
