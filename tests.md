@@ -242,5 +242,5 @@ Scenario 1: Test adding to admins:
 
 Scenario 2: Test removing from admins:
 
-[] the current admin
-[] the new admin
+[x] the current admin
+[x] the new admin

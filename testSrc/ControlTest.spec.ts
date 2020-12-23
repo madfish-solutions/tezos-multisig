@@ -1,4 +1,5 @@
 import { Multisig } from "./proxies/multisig";
+import multisigStorage from "./storage/multisig";
 import { strictEqual, rejects } from "assert";
 import { standardDelay, updateControlData } from "./proxies/utils";
 import accounts from "./accounts/accounts";
@@ -9,7 +10,8 @@ contract("Control()", function () {
   let multisig: Multisig;
 
   before(async function () {
-    multisig = await Multisig.init((await CMultisig.deployed()).address);
+    const multisigContract = await CMultisig.new(multisigStorage);
+    multisig = await Multisig.init(multisigContract.address.toString());
   });
 
   it("should update admins if sent from wallet", async function () {

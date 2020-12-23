@@ -1,6 +1,6 @@
-const multisig : address = ("KT1NXTrravkVyBuR7MUNLhvtLb4WSrAu8RCy" : address);
-const allowed : bool = True;
-const manager : address = ("tz1MnmtP4uAcgMpeZN6JtyziXeFqqwQG6yn6" : address);
+const multisig : address = ("KT1LV8XyNMVjXgemiKF4u49kvJrLRm2TNfXU" : address);
+const allowed : bool = False;
+const manager : address = ("tz1R2oNqANNy2vZhnZBJc8iMEqW79t85Fv7L" : address);
 type operator_info is record [
   allowed     : bool;
   manager     : address;

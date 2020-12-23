@@ -1,5 +1,5 @@
 const origin : address = ("tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb" : address);
-const token : address = ("KT1CFnjDM2e45ypQyLBekDAniUrGCbu3KbKi" : address);
+const token : address = ("KT1BQoCy9hYPvnkwE3xJ4QurNQgYkVaaep1U" : address);
 const value : nat = 100n;
 const receiver : address = ("tz1aSkwEot3L2kmUvcoxzjMomb9mvBNuzFK6" : address);
 type send_type is Send of michelson_pair(address, "from", michelson_pair(address, "to", nat, "value"), "")

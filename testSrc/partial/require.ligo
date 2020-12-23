@@ -1,4 +1,4 @@
-const multisig : address = ("KT1DyhEsDQg98yW4RYcQQicv8urY6TDPcsbt" : address);
+const multisig : address = ("KT1GJFvxYnKvQdK6xedENTdQddQcgw4YcJr9" : address);
 const count : nat = 1n;
 type retquire_type is Set of nat
 

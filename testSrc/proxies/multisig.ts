@@ -15,7 +15,9 @@ export class Multisig {
   }
 
   static async init(multisigAddress: string): Promise<Multisig> {
-    return new Multisig(await tezos.contract.at(multisigAddress));
+    const multisig = new Multisig(await tezos.contract.at(multisigAddress));
+    await multisig.updateStorage();
+    return multisig;
   }
 
   async updateProvider(accountName: string): Promise<void> {

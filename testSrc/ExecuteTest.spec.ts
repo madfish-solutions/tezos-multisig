@@ -1,4 +1,5 @@
 import { Multisig } from "./proxies/multisig";
+import multisigStorage from "./storage/multisig";
 import { defaultAccountTokenInfo } from "./constants";
 import { strictEqual, ok, notStrictEqual, rejects } from "assert";
 import {
@@ -17,7 +18,8 @@ contract("Execute()", function () {
   let multisig: Multisig;
 
   before(async function () {
-    multisig = await Multisig.init((await CMultisig.deployed()).address);
+    const multisigContract = await CMultisig.new(multisigStorage);
+    multisig = await Multisig.init(multisigContract.address.toString());
   });
 
   it("should execute proposal from admin", async function () {
